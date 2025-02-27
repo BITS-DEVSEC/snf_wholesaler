@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :businesses
   resources :users
   resources :groups
+  resources :stores
 end
