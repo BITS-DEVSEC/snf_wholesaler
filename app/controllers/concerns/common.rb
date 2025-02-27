@@ -1,136 +1,138 @@
-extend ActiveSupport::Concern
-include Pagination
+module Common
+  extend ActiveSupport::Concern
+  include Pagination
 
-included do
+  included do
     before_action :set_clazz
     before_action :set_object, only: %i[show update]
-end
+  end
 
-def index
+  def index
     data = nil
     options = {}
     if block_given?
-    incoming = yield
-    if incoming.instance_of?(Array)
+      incoming = yield
+      if incoming.instance_of?(Array)
         data, options = incoming
-    elsif incoming.instance_of?(Hash)
+      elsif incoming.instance_of?(Hash)
         options = incoming
-    else
+      else
         data = incoming
-    end
+      end
     else
-    data = @clazz.all
+      data = @clazz.all
     end
     total = data.count
     data = data.then(&paginate) if params[:page]
     result = {
-    success: true,
-    data: serialize(data, options)
+      success: true,
+      data: serialize(data, options)
     }
     if params[:page]
-    result[:page] = params[:page]
-    result[:total] = total
+      result[:page] = params[:page]
+      result[:total] = total
     end
 
     render json: result
-end
+  end
 
-def show
+  def show
     data = nil
     options = {}
     if block_given?
-    incoming = yield
-    if incoming.instance_of?(Array)
+      incoming = yield
+      if incoming.instance_of?(Array)
         data, options = incoming
-    elsif incoming.instance_of?(Hash)
+      elsif incoming.instance_of?(Hash)
         data = @obj
         options = incoming
-    else
+      else
         data = incoming
-    end
+      end
     else
-    data = @obj
+      data = @obj
     end
     result = {
-    success: true,
-    data: serialize(data, options)
+      success: true,
+      data: serialize(data, options)
     }
     render json: result
-end
+  end
 
-def create
+  def create
     obj = nil
     options = {}
     if block_given?
-    incoming = yield
-    if incoming.instance_of?(Array)
+      incoming = yield
+      if incoming.instance_of?(Array)
         obj, options = incoming
-    elsif incoming.instance_of?(Hash)
+      elsif incoming.instance_of?(Hash)
         obj = @clazz.new(model_params)
         options = incoming
-    else
+      else
         obj = incoming
-    end
+      end
     else
-    obj = @clazz.new(model_params)
+      obj = @clazz.new(model_params)
     end
 
     if obj.save
-    result = {
+      result = {
         success: true,
         data: serialize(obj, options)
-    }
-    render json: result, status: :created
+      }
+      render json: result, status: :created
     else
-    render json: { success: false, error: obj.errors.full_messages[0] }, status: 422
+      render json: { success: false, error: obj.errors.full_messages[0] }, status: 422
     end
-rescue StandardError => e
+  rescue StandardError => e
     render json: { success: false, error: e.message }
-end
+  end
 
-def update
+  def update
     obj = nil
     options = {}
     if block_given?
-    incoming = yield
-    if incoming.instance_of?(Array)
+      incoming = yield
+      if incoming.instance_of?(Array)
         obj, options = incoming
-    elsif incoming.instance_of?(Hash)
+      elsif incoming.instance_of?(Hash)
         obj = set_object
         options = incoming
-    else
+      else
         obj = incoming
-    end
+      end
     else
-    obj = set_object
+      obj = set_object
     end
 
     if obj.update(model_params)
-    result = {
+      result = {
         success: true,
         data: serialize(obj, options)
-    }
-    render json: result
+      }
+      render json: result
     else
-    render json: { success: false, error: obj.errors.full_messages[0] }, status: 422
+      render json: { success: false, error: obj.errors.full_messages[0] }, status: 422
     end
-rescue StandardError => e
+  rescue StandardError => e
     render json: { success: false, error: e.message }
-end
+  end
 
-private
+  private
 
-def serialize(data, options = {})
+  def serialize(data, options = {})
     ActiveModelSerializers::SerializableResource.new(data, options)
-end
+  end
 
-def set_clazz
-    @clazz = "#{controller_name.classify}".constantize
-end
+  def set_clazz
+    @clazz = "SnfCore::#{controller_name.classify}".constantize
+  end
 
-def set_object
+  def set_object
     @obj = @clazz.find(params[:id])
-end
+  end
 
-# This class should be overridden by respective child controllers
-def model_params; end
+  # This method should be overridden by respective child controllers
+  def model_params; end
+end

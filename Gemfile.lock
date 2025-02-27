@@ -312,6 +312,8 @@ GEM
       rspec-expectations (~> 3.13)
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
     rspec-support (3.13.2)
     rubocop (1.73.1)
       json (~> 2.3)
@@ -354,7 +356,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
-    snf_core (0.2.2)
+    snf_core (0.2.5)
       active_model_serializers
       ancestry (~> 4.1.0)
       bcrypt (~> 3.1)
@@ -435,6 +437,7 @@ DEPENDENCIES
   rails (~> 8.0.1)
   ransack
   rspec-rails
+  rspec-retry
   rubocop-rails-omakase
   rubocop-rspec
   simplecov
