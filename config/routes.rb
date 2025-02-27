@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :customer_groups
   resources :store
   resources :store_inventories
+  resources :wallets
 end
