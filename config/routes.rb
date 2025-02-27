@@ -9,4 +9,9 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :businesses
   resources :business_documents
+  resources :users
+  resources :groups
+  resources :stores
+  resources :products
+  resources :categories
 end
