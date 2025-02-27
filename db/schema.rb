@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_26_193938) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_27_102833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -91,14 +91,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_193938) do
   end
 
   create_table "snf_core_store_inventories", force: :cascade do |t|
-    t.string "stock_quantity"
-    t.float "reorder_level"
-    t.datetime "last_restocked_at"
     t.bigint "store_id", null: false
     t.bigint "product_id", null: false
+    t.decimal "base_price", precision: 10, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0, null: false
     t.index ["product_id"], name: "index_snf_core_store_inventories_on_product_id"
+    t.index ["store_id", "product_id"], name: "index_snf_core_store_inventories_on_store_id_and_product_id", unique: true
     t.index ["store_id"], name: "index_snf_core_store_inventories_on_store_id"
   end
 
@@ -125,6 +125,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_193938) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "snf_core_wallets", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "wallet_number", null: false
+    t.decimal "balance", null: false
+    t.boolean "is_active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_snf_core_wallets_on_user_id"
+    t.index ["wallet_number"], name: "index_snf_core_wallets_on_wallet_number", unique: true
+  end
+
   add_foreign_key "snf_core_business_documents", "snf_core_businesses", column: "business_id"
   add_foreign_key "snf_core_business_documents", "snf_core_users", column: "verified_by_id"
   add_foreign_key "snf_core_businesses", "snf_core_users", column: "user_id"
@@ -137,4 +148,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_193938) do
   add_foreign_key "snf_core_store_inventories", "snf_core_stores", column: "store_id"
   add_foreign_key "snf_core_stores", "snf_core_addresses", column: "address_id"
   add_foreign_key "snf_core_stores", "snf_core_businesses", column: "business_id"
+  add_foreign_key "snf_core_wallets", "snf_core_users", column: "user_id"
 end
