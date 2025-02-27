@@ -1,15 +1,21 @@
 example_id                                    | status | run_time        |
 --------------------------------------------- | ------ | --------------- |
-./spec/requests/businesses_spec.rb[1:1:1:1]   | passed | 0.01858 seconds |
-./spec/requests/businesses_spec.rb[1:1:2:1]   | passed | 0.22466 seconds |
-./spec/requests/businesses_spec.rb[1:1:3:1:1] | passed | 0.00959 seconds |
-./spec/requests/businesses_spec.rb[1:1:3:2:1] | passed | 0.00306 seconds |
-./spec/requests/businesses_spec.rb[1:1:4:1:1] | passed | 0.01341 seconds |
-./spec/requests/businesses_spec.rb[1:1:4:2:1] | passed | 0.00892 seconds |
-./spec/requests/users_spec.rb[1:1:1:1]        | passed | 0.01325 seconds |
-./spec/requests/users_spec.rb[1:1:2:1]        | passed | 0.00512 seconds |
-./spec/requests/users_spec.rb[1:1:3:1:1]      | passed | 0.00583 seconds |
-./spec/requests/users_spec.rb[1:1:3:2:1]      | passed | 0.00329 seconds |
-./spec/requests/users_spec.rb[1:1:4:1:1]      | passed | 0.00863 seconds |
-./spec/requests/users_spec.rb[1:1:4:2:1]      | passed | 0.00704 seconds |
-./spec/sample_spec.rb[1:1]                    | passed | 0.00061 seconds |
+./spec/requests/businesses_spec.rb[1:1:1:1]   | passed | 0.01933 seconds |
+./spec/requests/businesses_spec.rb[1:1:2:1]   | passed | 0.00747 seconds |
+./spec/requests/businesses_spec.rb[1:1:3:1:1] | passed | 0.00907 seconds |
+./spec/requests/businesses_spec.rb[1:1:3:2:1] | passed | 0.00381 seconds |
+./spec/requests/businesses_spec.rb[1:1:4:1:1] | passed | 0.01322 seconds |
+./spec/requests/businesses_spec.rb[1:1:4:2:1] | passed | 0.00895 seconds |
+./spec/requests/groups_spec.rb[1:1:1:1]       | passed | 0.02272 seconds |
+./spec/requests/groups_spec.rb[1:1:2:1]       | passed | 0.22478 seconds |
+./spec/requests/groups_spec.rb[1:1:3:1:1]     | passed | 0.00977 seconds |
+./spec/requests/groups_spec.rb[1:1:3:2:1]     | passed | 0.00191 seconds |
+./spec/requests/groups_spec.rb[1:1:4:1:1]     | passed | 0.01625 seconds |
+./spec/requests/groups_spec.rb[1:1:4:2:1]     | passed | 0.00839 seconds |
+./spec/requests/users_spec.rb[1:1:1:1]        | passed | 0.01439 seconds |
+./spec/requests/users_spec.rb[1:1:2:1]        | passed | 0.00656 seconds |
+./spec/requests/users_spec.rb[1:1:3:1:1]      | passed | 0.00617 seconds |
+./spec/requests/users_spec.rb[1:1:3:2:1]      | passed | 0.00349 seconds |
+./spec/requests/users_spec.rb[1:1:4:1:1]      | passed | 0.00852 seconds |
+./spec/requests/users_spec.rb[1:1:4:2:1]      | passed | 0.0078 seconds  |
+./spec/sample_spec.rb[1:1]                    | passed | 0.00066 seconds |
