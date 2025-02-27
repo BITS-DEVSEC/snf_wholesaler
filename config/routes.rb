@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :groups
   resources :stores
   resources :products
+  resources :categories
 end
