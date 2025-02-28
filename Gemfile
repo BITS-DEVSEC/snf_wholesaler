@@ -11,6 +11,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 6.3"
 gem "rack-cors"
 gem "ransack"
+gem 'aws-sdk-s3'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
