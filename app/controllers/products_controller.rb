@@ -9,7 +9,9 @@ class ProductsController < ApplicationController
       :name,
       :description,
       :base_price,
-      :category_id
+      :category_id,
+      :thumbnail_image,
+      images: []
     )
   end
 end
