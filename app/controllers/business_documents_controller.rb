@@ -11,5 +11,4 @@ class BusinessDocumentsController < ApplicationController
       :document
     )
   end
-
 end

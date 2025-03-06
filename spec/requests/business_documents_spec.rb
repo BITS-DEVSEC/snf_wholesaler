@@ -6,7 +6,7 @@ RSpec.describe "BusinessDocuments", type: :request do
   let(:valid_attributes) do
     {
       business_id: create(:business).id,
-      document_type: :business_license,
+      document_type: :business_license_doc,
       uploaded_at: Time.current,
       document: fixture_file_upload('spec/fixtures/files/sample.pdf', 'application/pdf')
     }
@@ -40,9 +40,9 @@ RSpec.describe "BusinessDocuments", type: :request do
       it "updates the requested business_document" do
         business_document = SnfCore::BusinessDocument.create! valid_attributes
         put business_document_url(business_document),
-            params: { payload: { document_type: :representative_id } }
+            params: { payload: { document_type: :representative_id_doc } }
         business_document.reload
-        expect(business_document.document_type).to eq("representative_id")
+        expect(business_document.document_type).to eq("representative_id_doc")
       end
     end
   end
