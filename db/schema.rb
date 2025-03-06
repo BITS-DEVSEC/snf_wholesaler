@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_27_190142) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -99,12 +99,48 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_190142) do
     t.index ["group_id"], name: "index_snf_core_customer_groups_on_group_id"
   end
 
+  create_table "snf_core_delivery_orders", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.string "delivery_address", null: false
+    t.string "contact_phone", null: false
+    t.text "delivery_notes", null: false
+    t.datetime "estimated_delivery_time", null: false
+    t.datetime "actual_delivery_time"
+    t.integer "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_snf_core_delivery_orders_on_order_id"
+  end
+
   create_table "snf_core_groups", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "business_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_snf_core_groups_on_business_id"
+  end
+
+  create_table "snf_core_order_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "store_inventory_id", null: false
+    t.integer "quantity", null: false
+    t.decimal "unit_price", null: false
+    t.decimal "subtotal", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_snf_core_order_items_on_order_id"
+    t.index ["store_inventory_id"], name: "index_snf_core_order_items_on_store_inventory_id"
+  end
+
+  create_table "snf_core_orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "store_id", null: false
+    t.integer "status", default: 1, null: false
+    t.decimal "total_amount", default: "0.0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_id"], name: "index_snf_core_orders_on_store_id"
+    t.index ["user_id"], name: "index_snf_core_orders_on_user_id"
   end
 
   create_table "snf_core_products", force: :cascade do |t|
@@ -116,6 +152,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_190142) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_snf_core_products_on_category_id"
+  end
+
+  create_table "snf_core_roles", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "snf_core_store_inventories", force: :cascade do |t|
@@ -142,15 +184,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_190142) do
     t.index ["business_id"], name: "index_snf_core_stores_on_business_id"
   end
 
+  create_table "snf_core_user_roles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "role_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_snf_core_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_snf_core_user_roles_on_user_id"
+  end
+
   create_table "snf_core_users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "middle_name", null: false
     t.string "last_name", null: false
     t.string "email"
     t.string "phone_number", null: false
-    t.integer "role", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest", null: false
+    t.boolean "password_changed", default: false
+    t.string "reset_password_token"
   end
 
   create_table "snf_core_wallets", force: :cascade do |t|
@@ -172,11 +225,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_190142) do
   add_foreign_key "snf_core_categories", "snf_core_categories", column: "parent_id"
   add_foreign_key "snf_core_customer_groups", "snf_core_groups", column: "group_id"
   add_foreign_key "snf_core_customer_groups", "snf_core_users", column: "customer_id"
+  add_foreign_key "snf_core_delivery_orders", "snf_core_orders", column: "order_id"
   add_foreign_key "snf_core_groups", "snf_core_businesses", column: "business_id"
+  add_foreign_key "snf_core_order_items", "snf_core_orders", column: "order_id"
+  add_foreign_key "snf_core_order_items", "snf_core_store_inventories", column: "store_inventory_id"
+  add_foreign_key "snf_core_orders", "snf_core_stores", column: "store_id"
+  add_foreign_key "snf_core_orders", "snf_core_users", column: "user_id"
   add_foreign_key "snf_core_products", "snf_core_categories", column: "category_id"
   add_foreign_key "snf_core_store_inventories", "snf_core_products", column: "product_id"
   add_foreign_key "snf_core_store_inventories", "snf_core_stores", column: "store_id"
   add_foreign_key "snf_core_stores", "snf_core_addresses", column: "address_id"
   add_foreign_key "snf_core_stores", "snf_core_businesses", column: "business_id"
+  add_foreign_key "snf_core_user_roles", "snf_core_roles", column: "role_id"
+  add_foreign_key "snf_core_user_roles", "snf_core_users", column: "user_id"
   add_foreign_key "snf_core_wallets", "snf_core_users", column: "user_id"
 end
