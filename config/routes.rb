@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   resources :users
   resources :groups
   resources :stores
-  resources :products
+  resources :products do
+    collection do
+      post :wholesalers
+    end
+  end
   resources :categories
   resources :addresses
   resources :customer_groups
