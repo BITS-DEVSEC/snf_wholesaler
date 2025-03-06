@@ -28,6 +28,10 @@ example_id                                                 | status | run_time  
 ./spec/requests/customer_groups_spec.rb[1:1:3:2:1]         | passed | 0.0581 seconds  |
 ./spec/requests/customer_groups_spec.rb[1:1:4:1:1]         | passed | 0.55383 seconds |
 ./spec/requests/customer_groups_spec.rb[1:1:4:2:1]         | passed | 0.33188 seconds |
+./spec/requests/delivery_orders_spec.rb[1:1:1:1]           | failed | 0.71768 seconds |
+./spec/requests/delivery_orders_spec.rb[1:1:2:1]           | failed | 0.27069 seconds |
+./spec/requests/delivery_orders_spec.rb[1:2:1:1]           | failed | 0.36967 seconds |
+./spec/requests/delivery_orders_spec.rb[1:3:1:1]           | failed | 3.59 seconds    |
 ./spec/requests/groups_spec.rb[1:1:1:1]                    | passed | 0.38384 seconds |
 ./spec/requests/groups_spec.rb[1:1:2:1]                    | passed | 0.1355 seconds  |
 ./spec/requests/groups_spec.rb[1:1:3:1:1]                  | passed | 0.13664 seconds |
