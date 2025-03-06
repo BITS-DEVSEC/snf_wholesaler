@@ -10,7 +10,9 @@ class UsersController < ApplicationController
       :last_name,
       :email,
       :phone_number,
-      :role
+      :password_digest,
+      :reset_password_token
+
     )
   end
 end

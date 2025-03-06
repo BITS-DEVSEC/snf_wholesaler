@@ -8,7 +8,8 @@ RSpec.describe "Users", type: :request do
       last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
       phone_number: Faker::PhoneNumber.phone_number,
-      role: 1
+      password_digest: Faker::Internet.password,
+      reset_password_token: Faker::Internet.password
     }
   end
 
@@ -18,8 +19,7 @@ RSpec.describe "Users", type: :request do
       middle_name: nil,
       last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
-      phone_number: Faker::PhoneNumber.phone_number,
-      role: 1
+      phone_number: Faker::PhoneNumber.phone_number
     }
   end
 
@@ -29,10 +29,9 @@ RSpec.describe "Users", type: :request do
       middle_name: Faker::Name.middle_name,
       last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
-      phone_number: Faker::PhoneNumber.phone_number,
-      role: 2
+      phone_number: Faker::PhoneNumber.phone_number
     }
   end
 
-  it_behaves_like "request_shared_spec", "users", 9
+  it_behaves_like "request_shared_spec", "users", 11
 end
