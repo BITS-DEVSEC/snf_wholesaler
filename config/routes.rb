@@ -24,7 +24,6 @@ Rails.application.routes.draw do
   resources :store_inventories
   resources :wallets
   resources :delivery_orders
-  resources :orders do
-    resources :order_items
-  end
+  resources :orders
+  resources :order_items
 end

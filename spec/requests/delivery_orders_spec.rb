@@ -25,30 +25,6 @@ RSpec.describe "DeliveryOrders", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "delivery_orders", 9, [:update, :create]
+  it_behaves_like "request_shared_spec", "delivery_orders", 10, []
 
-  describe "POST /create" do
-    context "with valid params" do
-      it "creates a new delivery order" do
-        expect {
-          post delivery_orders_url,
-               params: {
-                 payload: valid_attributes
-               }
-        }.to change(SnfCore::DeliveryOrder, :count).by(1)
-      end
-    end
-  end
-
-  describe "PUT /update" do
-    context "with valid params" do
-      it "updates the requested delivery_order" do
-        delivery_order = SnfCore::DeliveryOrder.create! valid_attributes
-        put delivery_order_url(delivery_order),
-            params: { payload: { status: :in_progress } }
-        delivery_order.reload
-        expect(delivery_order.status).to eq("in_progress")
-      end
-    end
-  end
 end
