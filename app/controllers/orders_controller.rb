@@ -8,13 +8,7 @@ class OrdersController < ApplicationController
       :user_id,
       :store_id,
       :status,
-      :total_amount,
-      order_items_attributes: [
-        :store_inventory_id,
-        :quantity,
-        :unit_price,
-        :subtotal
-      ]
+      :total_amount
     )
   end
 end
