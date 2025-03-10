@@ -377,7 +377,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
-    snf_core (0.2.93)
+    snf_core (0.2.94)
       active_model_serializers
       ancestry (~> 4.1.0)
       bcrypt (~> 3.1)
