@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   resources :delivery_orders
   resources :orders
   resources :order_items
+  resources :item_requests
 end
