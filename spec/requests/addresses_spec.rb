@@ -31,5 +31,5 @@ RSpec.describe "Addresses", type: :request do
     }
   end
 
-  it_behaves_like 'request_shared_spec', 'addresses', 9
+  it_behaves_like 'request_shared_spec', 'addresses', 10
 end
