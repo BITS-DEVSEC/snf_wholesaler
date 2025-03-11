@@ -27,4 +27,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :order_items
   resources :virtual_accounts
+  resources :item_requests
+  resources :virtual_account_transactions
+
 end
