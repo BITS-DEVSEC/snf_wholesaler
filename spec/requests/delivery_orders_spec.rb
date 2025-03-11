@@ -26,5 +26,4 @@ RSpec.describe "DeliveryOrders", type: :request do
   end
 
   it_behaves_like "request_shared_spec", "delivery_orders", 10, []
-
 end

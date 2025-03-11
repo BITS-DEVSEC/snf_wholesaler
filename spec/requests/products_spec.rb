@@ -32,5 +32,4 @@ RSpec.describe "Products", type: :request do
   end
 
   it_behaves_like 'request_shared_spec', 'products', 8
-
 end
