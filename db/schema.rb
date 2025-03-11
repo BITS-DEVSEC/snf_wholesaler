@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_11_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,30 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "snf_core_account_transfers", force: :cascade do |t|
+    t.string "source_account_type", null: false
+    t.bigint "source_account_id", null: false
+    t.string "destination_account_type", null: false
+    t.bigint "destination_account_id", null: false
+    t.bigint "user_id", null: false
+    t.decimal "amount", precision: 15, scale: 2, null: false
+    t.string "reference_number", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "transfer_type", null: false
+    t.text "description"
+    t.text "failure_reason"
+    t.datetime "completed_at"
+    t.bigint "reversal_transfer_id"
+    t.jsonb "cbs_response_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["destination_account_type", "destination_account_id"], name: "index_snf_core_account_transfers_on_destination_account"
+    t.index ["reference_number"], name: "index_snf_core_account_transfers_on_reference_number", unique: true
+    t.index ["reversal_transfer_id"], name: "index_snf_core_account_transfers_on_reversal_transfer_id"
+    t.index ["source_account_type", "source_account_id"], name: "index_snf_core_account_transfers_on_source_account"
+    t.index ["user_id"], name: "index_snf_core_account_transfers_on_user_id"
+  end
+
   create_table "snf_core_addresses", force: :cascade do |t|
     t.string "address_type", null: false
     t.string "city", null: false
@@ -51,6 +75,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
     t.decimal "longitude", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "house_number"
   end
 
   create_table "snf_core_business_documents", force: :cascade do |t|
@@ -118,6 +143,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_snf_core_groups_on_business_id"
+  end
+
+  create_table "snf_core_item_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "quantity", null: false
+    t.date "requested_delivery_date", null: false
+    t.text "notes"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_snf_core_item_requests_on_product_id"
+    t.index ["user_id"], name: "index_snf_core_item_requests_on_user_id"
   end
 
   create_table "snf_core_order_items", force: :cascade do |t|
@@ -204,6 +242,50 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
     t.string "password_digest", null: false
     t.boolean "password_changed", default: false
     t.string "reset_password_token"
+    t.date "date_of_birth", null: false
+    t.string "nationality", null: false
+    t.string "occupation"
+    t.string "source_of_funds"
+    t.integer "kyc_status"
+    t.integer "gender"
+    t.datetime "verified_at"
+    t.bigint "verified_by_id"
+    t.bigint "address_id"
+  end
+
+  create_table "snf_core_virtual_account_transactions", force: :cascade do |t|
+    t.bigint "from_account_id"
+    t.bigint "to_account_id"
+    t.decimal "amount", null: false
+    t.integer "transaction_type", null: false
+    t.integer "status", default: 0, null: false
+    t.string "reference_number", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_snf_core_virtual_account_transactions_on_created_at"
+    t.index ["from_account_id"], name: "index_snf_core_virtual_account_transactions_on_from_account_id"
+    t.index ["reference_number"], name: "idx_on_reference_number_bd9be00f20", unique: true
+    t.index ["to_account_id"], name: "index_snf_core_virtual_account_transactions_on_to_account_id"
+  end
+
+  create_table "snf_core_virtual_accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "account_number", limit: 11, null: false
+    t.string "cbs_account_number", null: false
+    t.decimal "balance", default: "0.0", null: false
+    t.decimal "interest_rate", default: "0.0", null: false
+    t.integer "interest_type", default: 0, null: false
+    t.boolean "active", default: true, null: false
+    t.string "branch_code", limit: 3, null: false
+    t.string "product_scheme", limit: 1, null: false
+    t.string "voucher_type", limit: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_number"], name: "index_snf_core_virtual_accounts_on_account_number", unique: true
+    t.index ["branch_code", "product_scheme", "voucher_type"], name: "idx_on_branch_code_product_scheme_voucher_type_b7038b3d5f"
+    t.index ["cbs_account_number"], name: "index_snf_core_virtual_accounts_on_cbs_account_number", unique: true
+    t.index ["user_id"], name: "index_snf_core_virtual_accounts_on_user_id"
   end
 
   create_table "snf_core_wallets", force: :cascade do |t|
@@ -219,6 +301,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "snf_core_account_transfers", "snf_core_users", column: "user_id"
   add_foreign_key "snf_core_business_documents", "snf_core_businesses", column: "business_id"
   add_foreign_key "snf_core_business_documents", "snf_core_users", column: "verified_by_id"
   add_foreign_key "snf_core_businesses", "snf_core_users", column: "user_id"
@@ -227,6 +310,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
   add_foreign_key "snf_core_customer_groups", "snf_core_users", column: "customer_id"
   add_foreign_key "snf_core_delivery_orders", "snf_core_orders", column: "order_id"
   add_foreign_key "snf_core_groups", "snf_core_businesses", column: "business_id"
+  add_foreign_key "snf_core_item_requests", "snf_core_products", column: "product_id"
+  add_foreign_key "snf_core_item_requests", "snf_core_users", column: "user_id"
   add_foreign_key "snf_core_order_items", "snf_core_orders", column: "order_id"
   add_foreign_key "snf_core_order_items", "snf_core_store_inventories", column: "store_inventory_id"
   add_foreign_key "snf_core_orders", "snf_core_stores", column: "store_id"
@@ -238,5 +323,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_074713) do
   add_foreign_key "snf_core_stores", "snf_core_businesses", column: "business_id"
   add_foreign_key "snf_core_user_roles", "snf_core_roles", column: "role_id"
   add_foreign_key "snf_core_user_roles", "snf_core_users", column: "user_id"
+  add_foreign_key "snf_core_users", "snf_core_addresses", column: "address_id"
+  add_foreign_key "snf_core_users", "snf_core_users", column: "verified_by_id", on_delete: :nullify
+  add_foreign_key "snf_core_virtual_account_transactions", "snf_core_virtual_accounts", column: "from_account_id"
+  add_foreign_key "snf_core_virtual_account_transactions", "snf_core_virtual_accounts", column: "to_account_id"
+  add_foreign_key "snf_core_virtual_accounts", "snf_core_users", column: "user_id"
   add_foreign_key "snf_core_wallets", "snf_core_users", column: "user_id"
 end
