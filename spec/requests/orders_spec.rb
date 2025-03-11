@@ -12,12 +12,12 @@ RSpec.describe "Orders", type: :request do
       store_id: create(:store).id,
       status: :pending,
       total_amount: 1000.0,
-      order_items_attributes: [{
+      order_items_attributes: [ {
         store_inventory_id: store_inventory.id,
         quantity: 5,
         unit_price: 200.0,
         subtotal: 1000.0
-      }]
+      } ]
     }
   end
 
@@ -31,5 +31,4 @@ RSpec.describe "Orders", type: :request do
   end
 
   it_behaves_like "request_shared_spec", "orders", 7, []
-
 end

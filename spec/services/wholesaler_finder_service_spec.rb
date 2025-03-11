@@ -37,7 +37,7 @@ RSpec.describe WholesalerFinderService do
         service = described_class.new(products.map(&:id))
         result = service.find_best_wholesalers
 
-        expect(result.map { |r| r[:name] }).to eq(["Store 1", "Store 2", "Store 3"])
+        expect(result.map { |r| r[:name] }).to eq([ "Store 1", "Store 2", "Store 3" ])
         expect(result.last[:coverage_percentage]).to eq(66.67)
       end
     end
