@@ -10,8 +10,17 @@ class UsersController < ApplicationController
       :last_name,
       :email,
       :phone_number,
-      :password_digest,
-      :reset_password_token
+      :password,
+      :reset_password_token,
+      :address_id,
+      :date_of_birth,
+      :nationality,
+      :occupation,
+      :source_of_funds,
+      :kyc_status,
+      :gender,
+      :verified_at,
+      :verified_by_id
     )
   end
 end

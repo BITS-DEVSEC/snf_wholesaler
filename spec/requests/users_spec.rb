@@ -19,7 +19,7 @@ RSpec.describe "Users", type: :request do
       date_of_birth: Date.today,
       verified_by_id: nil,
       verified_at: DateTime.now,
-      address: create(:address)
+      address_id: create(:address).id
     }
   end
 

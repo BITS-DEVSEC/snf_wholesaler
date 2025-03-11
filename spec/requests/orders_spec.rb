@@ -21,6 +21,11 @@ RSpec.describe "Orders", type: :request do
     }
   end
 
+  let(:new_attributes) do
+    {
+      user_id: create(:user).id
+    }
+  end
   let(:invalid_attributes) do
     {
       user_id: nil,
