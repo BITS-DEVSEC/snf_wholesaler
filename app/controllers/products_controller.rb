@@ -30,9 +30,9 @@ class ProductsController < ApplicationController
         "(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance",
       )
       .order(base_price: :asc)
-      .order('distance ASC')
+      .order("distance ASC")
       .limit(3)
-      .exec_query([user_latitude, user_longitude, user_latitude])
+      .exec_query([ user_latitude, user_longitude, user_latitude ])
 
     render json: {
       data: @wholesalers.map { |inventory|
@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
 
   def wholesalers
     product_ids = params.dig(:payload, :product_ids)
-    
+
     if product_ids.blank?
       render json: { error: "product_ids parameter is required" }, status: :bad_request
       return

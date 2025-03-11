@@ -20,7 +20,7 @@ class WholesalerFinderService
         .sort_by do |inventories|
           coverage = inventories.map(&:product_id).uniq.size
           total_price = inventories.sum(&:base_price)
-          [-coverage, total_price]
+          [ -coverage, total_price ]
         end
 
       sorted_stores = sorted_partial_stores.first(3)
@@ -31,7 +31,7 @@ class WholesalerFinderService
         .sort_by do |inventories|
           coverage = inventories.map(&:product_id).uniq.size
           total_price = inventories.sum(&:base_price)
-          [-coverage, total_price]
+          [ -coverage, total_price ]
         end
 
       sorted_stores = (complete_store_values + partial_store_values).first(3)

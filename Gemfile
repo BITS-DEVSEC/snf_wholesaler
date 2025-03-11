@@ -11,7 +11,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 6.3"
 gem "rack-cors"
 gem "ransack"
-gem 'aws-sdk-s3'
+gem "aws-sdk-s3"
 
 
 
