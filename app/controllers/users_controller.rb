@@ -12,7 +12,6 @@ class UsersController < ApplicationController
       :phone_number,
       :password_digest,
       :reset_password_token
-
     )
   end
 end
