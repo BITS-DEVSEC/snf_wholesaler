@@ -25,5 +25,5 @@ RSpec.describe "Categories", type: :request do
       }
     end
 
-    it_behaves_like "request_shared_spec", "categories", 6
+    it_behaves_like "request_shared_spec", "categories", 7
 end

@@ -31,5 +31,5 @@ RSpec.describe "CustomerGroups", type: :request do
       }
     end
 
-    it_behaves_like "request_shared_spec", "customer_groups", 8
+    it_behaves_like "request_shared_spec", "customer_groups", 10
 end
