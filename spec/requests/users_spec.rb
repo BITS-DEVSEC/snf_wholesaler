@@ -44,4 +44,40 @@ RSpec.describe "Users", type: :request do
   end
 
   it_behaves_like "request_shared_spec", "users", 15, %i[create update]
+
+  describe "POST /users/:id/update_kyc_status" do
+    let(:target_user) { create(:user, kyc_status: :pending) }
+
+    context "when updating kyc status" do
+      it "updates to approved status" do
+        post update_kyc_status_user_path(target_user), params: { kyc_status: 'approved' }
+
+        expect(response).to have_http_status(:success)
+        result = JSON(response.body)
+        expect(result['success']).to be true
+
+        target_user.reload
+        expect(target_user.kyc_status).to eq('approved')
+        expect(target_user.verified_at).to be_present
+      end
+
+      it "updates to rejected status" do
+        post update_kyc_status_user_path(target_user), params: { kyc_status: 'rejected' }
+
+        expect(response).to have_http_status(:success)
+        target_user.reload
+        expect(target_user.kyc_status).to eq('rejected')
+      end
+    end
+
+    context "with invalid parameters" do
+      it "requires kyc_status parameter" do
+        post update_kyc_status_user_path(target_user), params: {}
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        result = JSON(response.body)
+        expect(result['error']).to eq('KYC status is required')
+      end
+    end
+  end
 end

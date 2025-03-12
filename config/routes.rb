@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :businesses
   resources :business_documents
-  resources :users
+  resources :users do
+    member do
+      post :update_kyc_status
+    end
+  end
   resources :groups
   resources :stores
   resources :products do
