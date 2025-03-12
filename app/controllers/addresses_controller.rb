@@ -10,6 +10,7 @@ class AddressesController < ApplicationController
             :sub_city,
             :woreda,
             :latitude,
+            :house_number,
             :longitude
         )
     end
