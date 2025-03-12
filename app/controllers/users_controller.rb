@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
   include Common
 
+  def create
+    render json: { error: "User creation not allowed through this endpoint" }, status: :forbidden
+  end
+
+  def update
+    render json: { error: "User updates not allowed through this endpoint" }, status: :forbidden
+  end
+
   private
 
   def model_params
@@ -10,9 +18,8 @@ class UsersController < ApplicationController
       :last_name,
       :email,
       :phone_number,
-      :password_digest,
+      :password,
       :reset_password_token
-
     )
   end
 end
