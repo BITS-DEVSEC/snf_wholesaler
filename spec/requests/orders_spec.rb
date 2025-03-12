@@ -30,5 +30,11 @@ RSpec.describe "Orders", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "orders", 7, []
+  let(:new_attributes) do
+    {
+      status: "pending"
+    }
+  end
+
+  it_behaves_like "request_shared_spec", "orders", 9, []
 end

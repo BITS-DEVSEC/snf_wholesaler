@@ -26,5 +26,5 @@ RSpec.describe "StoreInventories", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "store_inventories", 7
+  it_behaves_like "request_shared_spec", "store_inventories", 9
 end

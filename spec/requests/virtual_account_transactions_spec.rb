@@ -31,5 +31,5 @@ RSpec.describe "VirtualAccountTransactions", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "virtual_account_transactions", 10
+  it_behaves_like "request_shared_spec", "virtual_account_transactions", 12
 end

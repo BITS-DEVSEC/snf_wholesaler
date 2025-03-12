@@ -31,5 +31,5 @@ RSpec.describe "Stores", type: :request do
       }
     end
 
-    it_behaves_like "request_shared_spec", "stores", 8
+    it_behaves_like "request_shared_spec", "stores", 10
 end
