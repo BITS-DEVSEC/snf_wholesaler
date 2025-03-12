@@ -21,5 +21,5 @@ RSpec.describe "Groups", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "groups", 5
+  it_behaves_like "request_shared_spec", "groups", 6
 end

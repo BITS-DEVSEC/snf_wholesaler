@@ -21,5 +21,5 @@ RSpec.describe "Wallets", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "wallets", 7, [ :create, :index ]
+  it_behaves_like "request_shared_spec", "wallets", 8, [ :create, :index ]
 end

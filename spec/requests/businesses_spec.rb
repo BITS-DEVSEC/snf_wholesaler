@@ -27,5 +27,5 @@ RSpec.describe "Businesses", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "businesses", 9
+  it_behaves_like "request_shared_spec", "businesses", 10
 end

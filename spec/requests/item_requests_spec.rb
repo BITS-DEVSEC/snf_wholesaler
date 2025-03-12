@@ -31,5 +31,5 @@ RSpec.describe "ItemRequests", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "item_requests", 9
+  it_behaves_like "request_shared_spec", "item_requests", 11
 end
