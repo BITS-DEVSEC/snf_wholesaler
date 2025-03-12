@@ -32,4 +32,5 @@ Rails.application.routes.draw do
   resources :virtual_accounts
   resources :item_requests
   resources :virtual_account_transactions
+  resources :quotations
 end
