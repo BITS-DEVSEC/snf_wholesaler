@@ -9,6 +9,7 @@ class ItemRequestsController < ApplicationController
       :product_id,
       :quantity,
       :status,
+      :unit,
       :requested_delivery_date,
       :notes
     )
