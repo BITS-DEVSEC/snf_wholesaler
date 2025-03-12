@@ -7,9 +7,7 @@ RSpec.describe "VirtualAccountTransactions", type: :request do
       to_account_id: create(:virtual_account).id,
       amount: 1000.0,
       transaction_type: :transfer,
-      status: :pending,
-      reference_number: "TRX#{Time.current.to_i}",
-      description: "Fund transfer between virtual accounts"
+      reference_number: "TRX#{Time.current.to_i}"
     }
   end
 
@@ -31,10 +29,10 @@ RSpec.describe "VirtualAccountTransactions", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "virtual_account_transactions", 10
+  it_behaves_like "request_shared_spec", "virtual_account_transactions", 12
 
   describe "POST /pay" do
-    let(:order) { create(:order) }
+    let(:order) { create(:order, total_amount: 500.0) }
     let(:buyer) { create(:user) }
     let(:seller) { create(:user) }
     let(:buyer_account) { create(:virtual_account, user: buyer) }
@@ -43,13 +41,24 @@ RSpec.describe "VirtualAccountTransactions", type: :request do
 
     before do
       order.update(user: buyer, store: store)
+      buyer_account
+      seller_account
     end
 
-    context "with valid order number" do
+    context "with valid order id" do
       it "creates a new transaction" do
+        category = create(:category)
+        product = create(:product, category: category, base_price: 250.0)
+
+        store_inventory = create(:store_inventory, store: store, product: product, base_price: 250.0)
+
+        create(:order_item, order: order, store_inventory: store_inventory, quantity: 2, unit_price: 250.0, subtotal: 500.0)
+
+        order.reload
+
         params = {
           payload: {
-            order_number: order.order_number
+            order_id: order.id
           }
         }
 
@@ -69,11 +78,11 @@ RSpec.describe "VirtualAccountTransactions", type: :request do
       end
     end
 
-    context "with invalid order number" do
+    context "with invalid order id" do
       it "returns not found status" do
         params = {
           payload: {
-            order_number: "INVALID-ORDER"
+            order_id: 0
           }
         }
 
