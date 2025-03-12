@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     collection do
       get :my_orders
     end
+    member do
+      post :create_from_quotation
+    end
   end
   resources :order_items
   resources :virtual_accounts
