@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_12_043359) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_12_141147) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -71,8 +71,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_043359) do
     t.string "city", null: false
     t.string "sub_city", null: false
     t.string "woreda"
-    t.decimal "latitude", null: false
-    t.decimal "longitude", null: false
+    t.decimal "latitude"
+    t.decimal "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "house_number"
@@ -97,7 +97,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_043359) do
     t.string "tin_number", null: false
     t.integer "business_type", null: false
     t.datetime "verified_at"
-    t.integer "verification_status", null: false
+    t.integer "verification_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_snf_core_businesses_on_user_id"
@@ -154,6 +154,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_043359) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "unit"
     t.index ["product_id"], name: "index_snf_core_item_requests_on_product_id"
     t.index ["user_id"], name: "index_snf_core_item_requests_on_user_id"
   end
@@ -292,6 +293,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_043359) do
     t.string "branch_code", limit: 3, null: false
     t.string "product_scheme", limit: 1, null: false
     t.string "voucher_type", limit: 1, null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_number"], name: "index_snf_core_virtual_accounts_on_account_number", unique: true
