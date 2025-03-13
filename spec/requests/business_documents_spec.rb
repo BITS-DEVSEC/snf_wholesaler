@@ -20,7 +20,7 @@ RSpec.describe "BusinessDocuments", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "business_documents", 9, [ :update, :create ]
+  it_behaves_like "request_shared_spec", "business_documents", 6, [ :update, :create ]
 
   describe "POST /create" do
     context "with valid params" do

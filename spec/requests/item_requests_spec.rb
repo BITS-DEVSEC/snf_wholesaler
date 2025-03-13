@@ -70,4 +70,5 @@ RSpec.describe "ItemRequests", type: :request do
       expect(json_response['data'].map { |req| req['id'] }).not_to include(other_request.id)
     end
   end
+  it_behaves_like "request_shared_spec", "item_requests", 12
 end

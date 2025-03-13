@@ -5,9 +5,18 @@ class ProductSerializer < ActiveModel::Serializer
              :sku,
              :name,
              :description,
-             :base_price,
              :category_id,
-             :created_at
+             :base_price,
+             :thumbnail_url,
+             :image_urls
 
   belongs_to :category
+
+  def thumbnail_url
+    rails_blob_url(object.thumbnail_image, only_path: true) if object.thumbnail_image.attached?
+  end
+
+  def image_urls
+    object.images.map { |image| rails_blob_url(image, only_path: true) } if object.images.attached?
+  end
 end
