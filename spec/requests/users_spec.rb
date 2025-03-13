@@ -80,4 +80,41 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "GET /users/:id/has_virtual_account" do
+    let(:user) { create(:user) }
+
+
+    context "when user has a virtual account" do
+      it "returns true" do
+        create(:virtual_account, user: user)
+
+        get "/users/#{user.id}/has_virtual_account"
+
+        expect(response).to be_successful
+        result = JSON.parse(response.body)
+        expect(result['success']).to be_truthy
+        expect(result['has_virtual_account']).to be_truthy
+      end
+    end
+
+    context "when user does not have a virtual account" do
+      it "returns false" do
+        get "/users/#{user.id}/has_virtual_account"
+
+        expect(response).to be_successful
+        result = JSON.parse(response.body)
+        expect(result['success']).to be_truthy
+        expect(result['has_virtual_account']).to be_falsey
+      end
+    end
+
+    context "when user does not exist" do
+      it "returns 404 not found" do
+        get "/users/999999/has_virtual_account"
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

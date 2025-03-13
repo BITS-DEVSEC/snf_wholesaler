@@ -9,6 +9,13 @@ class UsersController < ApplicationController
     render json: { error: "User updates not allowed through this endpoint" }, status: :forbidden
   end
 
+  def has_virtual_account
+    user = SnfCore::User.find(params[:id])
+    has_account = user.virtual_account.present?
+
+    render json: { success: true, has_virtual_account: has_account }
+  end
+
   def update_kyc_status
     return render json: { success: false, error: "KYC status is required" },
                 status: :unprocessable_entity unless params[:kyc_status].present?
@@ -37,7 +44,8 @@ class UsersController < ApplicationController
       :phone_number,
       :password,
       :reset_password_token,
-      :kyc_status
+      :kyc_status,
+      :fayda_id
     )
   end
 end
