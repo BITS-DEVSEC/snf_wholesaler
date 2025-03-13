@@ -8,20 +8,35 @@ class ItemRequestsController < ApplicationController
     else
       @records = SnfCore::ItemRequest.all
     end
-    
+
     total = @records.count
     @records = @records.then(&paginate) if params[:page]
-    
+
     result = {
       success: true,
       data: serialize(@records)
     }
-    
+
     if params[:page]
       result[:page] = params[:page]
       result[:total] = total
     end
 
+    render json: result
+  end
+
+  def my_requests
+    @records = SnfCore::ItemRequest.where(user_id: current_user.id)
+    total = @records.count
+    @records = @records.then(&paginate) if params[:page]
+    result = {
+      success: true,
+      data: serialize(@records)
+    }
+    if params[:page]
+      result[:page] = params[:page]
+      result[:total] = total
+    end
     render json: result
   end
 

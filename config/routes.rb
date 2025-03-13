@@ -41,7 +41,12 @@ Rails.application.routes.draw do
   end
   resources :order_items
   resources :virtual_accounts
-  resources :item_requests
+  resources :item_requests do
+    collection do
+      get :my_requests
+    end
+  end
+
   resources :virtual_account_transactions do
     collection do
       post :pay
