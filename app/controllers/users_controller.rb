@@ -36,7 +36,8 @@ class UsersController < ApplicationController
       :email,
       :phone_number,
       :password,
-      :reset_password_token
+      :reset_password_token,
+      :kyc_status
     )
   end
 end
