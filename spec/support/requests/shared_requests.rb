@@ -3,6 +3,14 @@
 RSpec.shared_examples 'request_shared_spec' do |controller, field_count, exclude = []|
   include Rails.application.routes.url_helpers
 
+  let!(:user) { create(:user) }
+  let!(:role) { create(:role) }
+  let!(:user_role) { create(:user_role, user: user, role: role) }
+  let!(:token) { SnfCore::TokenService.new.encode({user: { id: user.id }, role: { name: role.name }}) }
+  let!(:headers) do
+    { Authorization: "Bearer #{token}" }
+  end
+
   let(:factory) { controller.classify.underscore.to_sym }
   let(:clazz) { "SnfCore::#{controller.classify}".constantize }
   unless exclude.include?(:index)

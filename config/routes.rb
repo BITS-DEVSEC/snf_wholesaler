@@ -52,5 +52,9 @@ Rails.application.routes.draw do
       post :pay
     end
   end
-  resources :quotations
+  resources :quotations do
+    collection do
+      post :create_from_item_request
+    end
+  end
 end
