@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_12_141147) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_13_103149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -253,7 +253,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_141147) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest", null: false
-    t.boolean "password_changed", default: false
+    t.boolean "password_changed", default: true
     t.string "reset_password_token"
     t.date "date_of_birth", null: false
     t.string "nationality", null: false
@@ -264,6 +264,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_141147) do
     t.datetime "verified_at"
     t.bigint "verified_by_id"
     t.bigint "address_id"
+    t.string "fayda_id"
   end
 
   create_table "snf_core_virtual_account_transactions", force: :cascade do |t|

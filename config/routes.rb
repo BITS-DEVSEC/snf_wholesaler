@@ -52,6 +52,9 @@ Rails.application.routes.draw do
       post :pay
     end
   end
+
+  get "users/:id/has_virtual_account", to: "users#has_virtual_account", as: "user_has_virtual_account"
+
   resources :quotations do
     collection do
       post :create_from_item_request
