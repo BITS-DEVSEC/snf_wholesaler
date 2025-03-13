@@ -34,7 +34,7 @@ RSpec.describe "ItemRequests", type: :request do
   describe "GET /index" do
     it "does not return the current user's requests" do
       user = create(:user)
-      
+
       # Mock the current_user instead of using token
       allow_any_instance_of(ItemRequestsController).to receive(:current_user).and_return(user)
 
@@ -51,5 +51,5 @@ RSpec.describe "ItemRequests", type: :request do
     end
   end
 
-  it_behaves_like "request_shared_spec", "item_requests", 11
+  it_behaves_like "request_shared_spec", "item_requests", 12
 end
