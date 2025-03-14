@@ -44,7 +44,7 @@ RSpec.describe "VirtualAccounts", type: :request do
     }
   end
 
-  it_behaves_like "request_shared_spec", "virtual_accounts", 11, []
+  it_behaves_like "request_shared_spec", "virtual_accounts", 13, []
 
   describe "with different interest types" do
     it "creates an interest-free account" do

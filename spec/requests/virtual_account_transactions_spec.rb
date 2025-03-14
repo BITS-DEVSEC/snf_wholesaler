@@ -95,4 +95,66 @@ RSpec.describe "VirtualAccountTransactions", type: :request do
       end
     end
   end
+
+  describe "GET /my_virtual_account_transactions" do
+    let(:user) { create(:user) }
+
+    before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    end
+
+    context "when user has a virtual account" do
+      let(:virtual_account) { create(:virtual_account, user: user) }
+      let(:other_account) { create(:virtual_account) }
+
+      before do
+        create(:virtual_account_transaction,
+               from_account: virtual_account,
+               to_account: other_account,
+               amount: 100,
+               transaction_type: :transfer,
+               status: :completed)
+
+        create(:virtual_account_transaction,
+               from_account: other_account,
+               to_account: virtual_account,
+               amount: 200,
+               transaction_type: :transfer,
+               status: :completed)
+      end
+
+      it "returns all transactions involving user's account" do
+        get my_virtual_account_transactions_virtual_account_transactions_path
+
+        expect(response).to have_http_status(:ok)
+        result = JSON.parse(response.body)
+        debugger
+
+        expect(result['success']).to be true
+        expect(result['data'].length).to eq(2)
+
+        transaction = result['data'].first
+        expect(transaction).to include(
+          'amount',
+          'transaction_type',
+          'status',
+          'reference_number',
+          'description',
+          'from_account',
+          'to_account'
+        )
+      end
+    end
+
+    context "when user does not have a virtual account" do
+      it "returns not found status" do
+        get my_virtual_account_transactions_virtual_account_transactions_path
+
+        expect(response).to have_http_status(:not_found)
+        result = JSON.parse(response.body)
+        expect(result['success']).to be false
+        expect(result['error']).to eq("Virtual account not found")
+      end
+    end
+  end
 end
