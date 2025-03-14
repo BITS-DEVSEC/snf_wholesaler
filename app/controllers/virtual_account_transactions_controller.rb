@@ -50,7 +50,7 @@ class VirtualAccountTransactionsController < ApplicationController
     )
 
     if @record.save
-      render json: { data: @record }, status: :created
+      render json: { success: true, data: @record }, status: :created
     else
       render json: {
         error: @record.errors.full_messages,
