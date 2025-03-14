@@ -44,6 +44,7 @@ class UsersController < ApplicationController
       :phone_number,
       :password,
       :reset_password_token,
+      :kyc_status,
       :fayda_id
     )
   end
