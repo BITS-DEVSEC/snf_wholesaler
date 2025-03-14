@@ -3,7 +3,8 @@ class OrdersController < ApplicationController
 
   def my_orders
     @orders = SnfCore::Order.where(user_id: current_user.id)
-    render json: { success: true, orders: @orders }
+    @order_items = SnfCore::OrderItem.where(order_id: @orders.pluck(:id))
+    render json: { success: true, orders: @orders, order_items: @order_items }
   end
 
   def create_from_quotation
