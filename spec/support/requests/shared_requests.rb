@@ -6,7 +6,7 @@ RSpec.shared_examples 'request_shared_spec' do |controller, field_count, exclude
   let!(:user) { create(:user) }
   let!(:role) { create(:role) }
   let!(:user_role) { create(:user_role, user: user, role: role) }
-  let!(:token) { SnfCore::TokenService.new.encode({user: { id: user.id }, role: { name: role.name }}) }
+  let!(:token) { SnfCore::TokenService.new.encode({ user: { id: user.id }, role: { name: role.name } }) }
   let!(:headers) do
     { Authorization: "Bearer #{token}" }
   end

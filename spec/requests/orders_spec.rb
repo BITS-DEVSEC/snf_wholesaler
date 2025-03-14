@@ -41,6 +41,8 @@ RSpec.describe "Orders", type: :request do
   describe "GET /my_orders/" do
     let(:user) { create(:user) }
     let!(:user_orders) { create_list(:order, 3, user: user) }
+
+
     let!(:other_orders) { create_list(:order, 2) }
 
     before do
@@ -48,6 +50,9 @@ RSpec.describe "Orders", type: :request do
     end
 
     it "returns only the current user's orders" do
+      user_orders.each do |order|
+        create(:order_item, order: order)
+      end
       get "/orders/my_orders"
 
       expect(response).to have_http_status(:ok)

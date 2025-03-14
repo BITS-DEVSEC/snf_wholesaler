@@ -1,6 +1,12 @@
 class QuotationsController < ApplicationController
   include Common
 
+  def my_quotations
+    item_request = SnfCore::ItemRequest.where(user_id: current_user.id)
+    quotations = SnfCore::Quotation.where(item_request_id: item_request.ids)
+    render json: { success: true, data: quotations }, status: :ok
+  end
+
   def create_from_item_request
     quotation = CreateFromItemRequestService.new(
       item_request_id: params[:item_request_id],

@@ -6,7 +6,7 @@ class CreateFromQuotationService
 
   def call
     quotation = SnfCore::Quotation.find(quotation_id)
-    item_request = quotation.item_request
+    item_request = SnfCore::ItemRequest.find(quotation.item_request_id)
     store_inventory = SnfCore::StoreInventory.find_by!(product_id: item_request.product_id)
 
     ActiveRecord::Base.transaction do
