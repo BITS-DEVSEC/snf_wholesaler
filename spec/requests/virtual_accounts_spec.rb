@@ -73,4 +73,38 @@ RSpec.describe "VirtualAccounts", type: :request do
       expect(JSON.parse(response.body)["data"]["interest_rate"]).to eq("0.15")
     end
   end
+
+  describe "GET /virtual_accounts/my_virtual_account" do
+    let(:user) { create(:user) }
+
+
+    before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    end
+
+    context "when user has a virtual account" do
+      it "returns the virtual account" do
+        virtual_account = create(:virtual_account, user: user)
+
+        get "/virtual_accounts/my_virtual_account"
+
+        expect(response).to have_http_status(:ok)
+        result = JSON.parse(response.body)
+        expect(result['success']).to be true
+        expect(result['data']['id']).to eq(virtual_account.id)
+        expect(result['data']['user_id']).to eq(user.id)
+      end
+    end
+
+    context "when user does not have a virtual account" do
+      it "returns not found status" do
+        get "/virtual_accounts/my_virtual_account"
+
+        expect(response).to have_http_status(:not_found)
+        result = JSON.parse(response.body)
+        expect(result['success']).to be false
+        expect(result['error']).to eq("Virtual account not found")
+      end
+    end
+  end
 end
