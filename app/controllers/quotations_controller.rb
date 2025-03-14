@@ -2,9 +2,29 @@ class QuotationsController < ApplicationController
   include Common
 
   def my_quotations
-    item_request = SnfCore::ItemRequest.where(user_id: current_user.id)
-    quotations = SnfCore::Quotation.where(item_request_id: item_request.ids)
-    render json: { success: true, data: quotations }, status: :ok
+    item_requests = SnfCore::ItemRequest.includes(:product)
+                                    .where(user_id: current_user.id)
+    quotations = SnfCore::Quotation.includes(:item_request)
+                                .where(item_request_id: item_requests.ids)
+
+    quotations_with_details = quotations.map do |quotation|
+      {
+        id: quotation.id,
+        price: quotation.price,
+        delivery_date: quotation.delivery_date,
+        valid_until: quotation.valid_until,
+        status: quotation.status,
+        notes: quotation.notes,
+        item_request: {
+          id: quotation.item_request.id,
+          quantity: quotation.item_request.quantity,
+          status: quotation.item_request.status,
+          product: quotation.item_request.product
+        }
+      }
+    end
+
+    render json: { success: true, data: quotations_with_details }, status: :ok
   end
 
   def create_from_item_request
