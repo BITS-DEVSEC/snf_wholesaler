@@ -23,7 +23,8 @@ class OrdersController < ApplicationController
       :user_id,
       :store_id,
       :status,
-      :total_amount
+      :total_amount,
+      :quotation_id
     )
   end
 end
