@@ -13,7 +13,8 @@ class VirtualAccountsController < ApplicationController
       :interest_rate,
       :interest_type,
       :active,
-      :cbs_account_number
+      :cbs_account_number,
+      :status
     )
   end
 end
