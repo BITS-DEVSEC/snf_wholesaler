@@ -40,7 +40,11 @@ Rails.application.routes.draw do
     end
   end
   resources :order_items
-  resources :virtual_accounts
+  resources :virtual_accounts do
+    collection do
+      get :my_virtual_account
+    end
+  end
   resources :item_requests do
     collection do
       get :my_requests
