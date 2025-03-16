@@ -9,7 +9,8 @@ class VirtualAccountSerializer < ActiveModel::Serializer
              :interest_type,
              :active,
              :cbs_account_number,
-             :status
+             :status,
+             :account_number
 
   belongs_to :user
 end

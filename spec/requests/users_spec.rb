@@ -93,7 +93,6 @@ RSpec.describe "Users", type: :request do
 
         expect(response).to be_successful
         result = JSON.parse(response.body)
-        debugger
         expect(result['success']).to be_truthy
         expect(result['has_virtual_account']).to be_truthy
       end

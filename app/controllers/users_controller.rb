@@ -12,9 +12,11 @@ class UsersController < ApplicationController
   def has_virtual_account
     user = SnfCore::User.find(params[:id])
     has_account = user.virtual_account.present?
-    status = user.virtual_account.status
+    status = user.virtual_account&.status
 
     render json: { success: true, has_virtual_account: has_account, status: status }
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, error: "User not found" }, status: :not_found
   end
 
   def update_kyc_status

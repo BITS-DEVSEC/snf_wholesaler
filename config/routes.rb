@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   resources :virtual_account_transactions do
     collection do
       post :pay
+      get :my_virtual_account_transactions
     end
   end
 
