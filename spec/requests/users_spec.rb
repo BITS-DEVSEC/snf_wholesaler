@@ -115,6 +115,56 @@ RSpec.describe "Users", type: :request do
         expect(response).to have_http_status(:not_found)
       end
     end
+  end  # Add this end for has_virtual_account describe block
+
+  describe "GET /users/profile" do
+    let(:user) { create(:user) }
+
+    context "when user exists" do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      end
+
+      it "returns user profile successfully" do
+        get profile_users_path
+
+        expect(response).to have_http_status(:success)
+        result = JSON.parse(response.body)
+        expect(result['success']).to be true
+        expect(result['data']['id']).to eq(user.id)
+      end
+    end
+
+    context "when user does not exist" do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(nil)
+      end
+
+      it "returns not found error" do
+        get profile_users_path
+
+        expect(response).to have_http_status(:not_found)
+        result = JSON.parse(response.body)
+        expect(result['success']).to be false
+        expect(result['error']).to eq('User not found')
+      end
+    end
+
+    context "when an unexpected error occurs" do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        allow(SnfCore::User).to receive(:find).and_raise(StandardError.new("Unexpected error"))
+      end
+
+      it "returns unprocessable entity error" do
+        get profile_users_path
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        result = JSON.parse(response.body)
+        expect(result['success']).to be false
+        expect(result['error']).to eq('Unexpected error')
+      end
+    end
   end
 
   describe "GET /users/profile" do
