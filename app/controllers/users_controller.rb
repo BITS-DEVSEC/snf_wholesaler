@@ -9,6 +9,15 @@ class UsersController < ApplicationController
     render json: { error: "User updates not allowed through this endpoint" }, status: :forbidden
   end
 
+  def profile
+    return render json: { success: false, error: "User not found" }, status: :not_found unless current_user
+
+    user = SnfCore::User.find(current_user.id)
+    render json: { success: true, data: user }
+  rescue StandardError => e
+    render json: { success: false, error: e.message }, status: :unprocessable_entity
+  end
+
   def has_virtual_account
     user = SnfCore::User.find(params[:id])
     has_account = user.virtual_account.present?
