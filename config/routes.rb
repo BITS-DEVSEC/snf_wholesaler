@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   resources :businesses
   resources :business_documents
   resources :users do
+    collection do
+      get :profile
+    end
     member do
       post :update_kyc_status
     end
