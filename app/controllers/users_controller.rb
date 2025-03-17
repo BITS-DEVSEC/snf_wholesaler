@@ -16,7 +16,6 @@ class UsersController < ApplicationController
     data = user.as_json.merge(
       address: user.address.as_json
     )
-    debugger
     render json: { success: true, data: data }
   rescue StandardError => e
     render json: { success: false, error: e.message }, status: :unprocessable_entity

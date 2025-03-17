@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
   resources :quotations do
     collection do
+      get :seller_quotations
       post :create_from_item_request
       get :my_quotations
     end

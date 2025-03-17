@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_13_103149) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_17_135148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -71,8 +71,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_103149) do
     t.string "city", null: false
     t.string "sub_city", null: false
     t.string "woreda"
-    t.decimal "latitude", null: false
-    t.decimal "longitude", null: false
+    t.decimal "latitude"
+    t.decimal "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "house_number"
@@ -202,7 +202,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_103149) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["item_request_id"], name: "index_snf_core_quotations_on_item_request_id"
+    t.index ["user_id"], name: "index_snf_core_quotations_on_user_id"
   end
 
   create_table "snf_core_roles", force: :cascade do |t|
@@ -333,6 +335,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_103149) do
   add_foreign_key "snf_core_orders", "snf_core_users", column: "user_id"
   add_foreign_key "snf_core_products", "snf_core_categories", column: "category_id"
   add_foreign_key "snf_core_quotations", "snf_core_item_requests", column: "item_request_id"
+  add_foreign_key "snf_core_quotations", "snf_core_users", column: "user_id"
   add_foreign_key "snf_core_store_inventories", "snf_core_products", column: "product_id"
   add_foreign_key "snf_core_store_inventories", "snf_core_stores", column: "store_id"
   add_foreign_key "snf_core_stores", "snf_core_addresses", column: "address_id"
