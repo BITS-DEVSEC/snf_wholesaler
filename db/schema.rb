@@ -71,8 +71,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_103149) do
     t.string "city", null: false
     t.string "sub_city", null: false
     t.string "woreda"
-    t.decimal "latitude"
-    t.decimal "longitude"
+    t.decimal "latitude", null: false
+    t.decimal "longitude", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "house_number"
